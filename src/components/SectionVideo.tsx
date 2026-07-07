@@ -20,15 +20,24 @@ export default function SectionVideo({
   const [visible, setVisible] = useState(false);
   const [ready, setReady] = useState(false);
 
+const hasLoadedRef = useRef(false);
+
   useEffect(() => {
+    const video = videoRef.current;
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setVisible(true);
-          videoRef.current?.play().catch(() => {});
+          if (video && !hasLoadedRef.current) {
+            video.load();
+            hasLoadedRef.current = true;
+          }
+          video?.play().catch(() => {});
+        } else {
+          video?.pause();
         }
       },
-      { threshold: 0.25 }
+      { threshold: 0.25, rootMargin: '150px' }
     );
     if (containerRef.current) obs.observe(containerRef.current);
     return () => obs.disconnect();
@@ -53,7 +62,7 @@ export default function SectionVideo({
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="none"
             onCanPlay={() => setReady(true)}
             className={`w-full h-full object-cover transition-all duration-[2s] ease-out
                         group-hover:scale-105

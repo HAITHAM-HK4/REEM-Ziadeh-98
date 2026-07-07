@@ -32,6 +32,8 @@ const VideoBackground = memo(({
   const containerRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
 
+const hasLoadedRef = useRef(false);
+
   useEffect(() => {
     const video = videoRef.current;
     const container = containerRef.current;
@@ -40,13 +42,19 @@ const VideoBackground = memo(({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          video.load();
-          video.play().catch(() => {});
+          if (!hasLoadedRef.current) {
+            video.load();
+            hasLoadedRef.current = true;
+          }
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {});
+          }
         } else {
           video.pause();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: '150px' }
     );
 
     observer.observe(container);

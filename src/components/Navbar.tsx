@@ -101,6 +101,7 @@ export default function Navbar() {
         </button>
       </nav>
 
+      {open && (
         <div className="md:hidden max-w-6xl mx-auto mt-2 bg-void/95 backdrop-blur-xl border border-white/8
                         rounded-2xl p-6 flex flex-col gap-4">
           {links.map((l) => (
@@ -120,7 +121,8 @@ export default function Navbar() {
             {language === 'en' ? 'AR' : 'EN'}
           </button>
         </div>
-      
+      )}
+
     </header>
   );
 }
