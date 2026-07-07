@@ -8,7 +8,9 @@ export const projects: Project[] = [
     tag: 'GRADUATION PROJECT',
     tagVariant: 'blue',
     icon: '🏫',
-    gradientClass: 'blue-grad',
+        gradientClass: 'blue-grad',
+    featured: true,
+    images: ['/images/p1.png', '/images/p2.png', '/images/p3.png', '/images/p4.png'],
     tools: ['DIALux', 'AutoCAD', 'Revit MEP', 'ETABS', 'MS Excel'],
     overview:
       'Designed a complete electrical power distribution system for a four-floor academic institute. The project encompassed everything from load calculations and single-line diagrams to detailed panel board layouts and cable sizing — all compliant with Syrian and international electrical standards.',
@@ -19,32 +21,15 @@ export const projects: Project[] = [
       { icon: '🔢', title: 'Load Analysis', desc: 'Complete load & demand calculations' },
     ],
   },
-  {
+   {
     id: 'proj2',
-    title: 'Lightning Protection System Design',
-    subtitle: 'Protection Engineering Study · 2024',
-    tag: 'PROTECTION STUDY',
-    tagVariant: 'gold',
-    icon: '⛈️',
-    gradientClass: 'gold-grad',
-    tools: ['IEC 62305', 'ETABS', 'AutoCAD', 'Technical Analysis'],
-    overview:
-      'Conducted a comprehensive lightning protection study for the same academic institute. The study covered risk assessment, protection zone analysis, down conductor routing, grounding system design, and surge protection — following IEC 62305 and international best practices.',
-    highlights: [
-      { icon: '⛈️', title: 'Risk Assessment', desc: 'Lightning risk level calculations' },
-      { icon: '🔰', title: 'Protection Zones', desc: 'Rolling sphere & mesh method analysis' },
-      { icon: '🌍', title: 'Grounding System', desc: 'Earth resistance & electrode design' },
-      { icon: '🛡️', title: 'Surge Protection', desc: 'SPD coordination per IEC standards' },
-    ],
-  },
-  {
-    id: 'proj3',
     title: 'Substation Training — Engineers Syndicate',
     subtitle: 'Certified by Lattakia Engineers Syndicate · 2023–2024',
     tag: 'CERTIFIED TRAINING',
     tagVariant: 'violet',
     icon: '🏭',
     gradientClass: 'violet-grad',
+     images: ['/images/T1.png', '/images/T2.png', '/images/T3.png'],
     tools: ['HV Systems', 'Transformer Maintenance', 'LV / MV / HV', 'Field Diagnostics'],
     overview:
       'Completed a certified practical training program issued by the Lattakia Engineers Syndicate. The program provided field-level experience in transformer maintenance, electrical fault diagnosis, and hands-on work in real switching centers at HV, MV, and LV levels.',
@@ -55,6 +40,26 @@ export const projects: Project[] = [
       { icon: '📜', title: 'Syndicate Certified', desc: 'Official certificate · Engineers Syndicate' },
     ],
   },
+{
+    id: 'proj3',
+    title: 'Freelance Document & Office Services',
+    subtitle: 'Self-Employed · Multi-Year Experience',
+    tag: 'PROFESSIONAL SERVICES',
+    tagVariant: 'violet',
+    icon: '🖨️',
+    gradientClass: 'violet-grad',
+    images: ['/images/W1.png', '/images/W2.png'],
+    tools: ['MS Word', 'MS Excel', 'MS PowerPoint', 'Document Scanning', 'Photography'],
+    overview:
+      'Provided professional freelance services for many years in a documents and stationery office, specializing in document photography, scanning, digitization, writing, and editing. Gained extensive hands-on experience with Microsoft Office applications — including Word, Excel, and PowerPoint — while handling a wide range of client documents and administrative paperwork with precision and reliability.',
+    highlights: [
+      { icon: '📷', title: 'Document Photography', desc: 'High-quality capture of official papers & files' },
+      { icon: '🖨️', title: 'Scanning & Digitization', desc: 'Converting physical documents to digital formats' },
+      { icon: '✍️', title: 'Writing & Editing', desc: 'Drafting and refining documents for clients' },
+      { icon: '💼', title: 'MS Office Expertise', desc: 'Word, Excel & PowerPoint — years of daily use' },
+    ],
+  },
+ 
 ];
 
 export const skillCategories: SkillCategory[] = [
@@ -93,28 +98,36 @@ export const skillCategories: SkillCategory[] = [
 ];
 
 export const experiences: ExperienceItem[] = [
-  {
+{
     period: '2016 — 2024',
-    title: 'B.Sc. Electrical Power Engineering',
+    title: 'B.Sc. in Electrical Power Engineering',
     org: '🎓 Tishreen University, Lattakia',
-    desc: '8-year engineering program covering power systems, protection, distribution networks, electrical machines, and building installations. Graduated with a full-system design project.',
+    desc: 'Engineering program covering power systems, protection, distribution networks, electrical machines, and building installations. Graduated with a full-system design project and a Bachelor\'s degree in Electrical Power Engineering.',
+    skills: ['Power Systems', 'Protection Design', 'Distribution Networks', 'Electrical Machines'],
+    iconType: 'graduation',
   },
-  {
+{
     period: '2016 — Present',
     title: 'Freelance Document Services Professional',
     org: '💼 Self-Employed, Lattakia',
-    desc: 'Over 8 years of professional freelance work in printing, scanning, document digitization, and office operations — building exceptional precision and client relationship skills alongside engineering studies.',
+    desc: 'Over 8 years of professional freelance work in printing, scanning, document digitization, writing, and editing — with hands-on daily use of Microsoft Office applications including Word, Excel, and PowerPoint. Built exceptional precision and client relationship skills alongside engineering studies.',
+    skills: ['MS Word', 'MS Excel', 'MS PowerPoint', 'Document Management', 'Client Relations', 'Office Operations'],
+    iconType: 'briefcase',
   },
   {
-    period: '2023 — 2024',
+    period: '2025',
     title: 'Certified Electrical Maintenance Trainee',
     org: '⚡ Lattakia Engineers Syndicate',
     desc: 'Hands-on certified training in transformer maintenance, electrical fault diagnosis, and practical field work at switching centers across HV, MV, and LV voltage levels.',
+    skills: ['Transformer Maintenance', 'Fault Diagnosis', 'HV/MV/LV Systems', 'Field Training'],
+    iconType: 'certificate',
   },
   {
     period: '2023 — 2024',
     title: 'Graduation Project: Institute Power Design',
     org: '🏫 Tishreen University Engineering Dept.',
     desc: 'Designed complete electrical power supply system for a 4-floor academic institute — including DIALux lighting simulation, load analysis, distribution boards, and a full lightning protection study.',
+    skills: ['DIALux', 'Load Analysis', 'Distribution Boards', 'Lightning Protection'],
+    iconType: 'building',
   },
 ];

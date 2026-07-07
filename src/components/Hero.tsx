@@ -1,64 +1,89 @@
 import { useTypewriter } from '../hooks/useTypewriter';
+import { useReveal } from '../hooks/useReveal';
+import { useTranslation } from '../contexts/TranslationContext';
+import VideoBackground from './VideoBackground';
 
 export default function Hero() {
+  const { t, language } = useTranslation();
   const typed = useTypewriter();
+  const content = useReveal();
+  const stats = useReveal(0.1);
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center relative z-10 px-6 md:px-16">
-      <div className="text-center max-w-4xl">
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 bg-yellow-400/8 border border-yellow-400/30
-                        px-5 py-2 rounded-full font-mono text-xs text-yellow-400 tracking-widest
-                        mb-8 animate-[fadeSlideDown_0.8s_ease_both]">
-          <span className="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse" />
-          ⚡ Electrical Power Engineer
+    <section id="hero" className="relative min-h-screen flex items-end md:items-center overflow-hidden bg-void">
+      <VideoBackground src="/videos/hero-substation.mp4" overlay="copper" />
+
+      {/* Animated scan line */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]" aria-hidden="true">
+        <div className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-copper/5 to-transparent animate-shimmer opacity-60" />
+      </div>
+
+      {/* Bottom gradient fade for seamless transition */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-[2]" aria-hidden="true">
+        <div className="w-full h-full bg-gradient-to-t from-void via-void/80 to-transparent" />
+      </div>
+
+      <div className="relative z-10 container-main pb-24 md:pb-0 pt-24 sm:pt-32 w-full">
+        <div
+          ref={content.ref}
+          className={`max-w-2xl transition-all duration-1000 ease-out ${
+            content.visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="hero-badge mb-4 sm:mb-6 text-[10px] sm:text-xs">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-copper-light opacity-70" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-copper-light" />
+            </span>
+            {t('hero.badge')}
+          </div>
+
+          <h1 className="heading-xl text-milk mb-3 sm:mb-4 drop-shadow-lg" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+            {t('hero.name')}<br />
+            <span className="text-copper-light">{t('hero.lastname')}</span>
+          </h1>
+
+          <p className="text-base sm:text-lg md:text-xl text-milk-muted font-light mb-2 min-h-8">
+            {typed}<span className="text-copper animate-pulse">|</span>
+          </p>
+
+          <p className="text-xs sm:text-sm md:text-base text-milk leading-relaxed max-w-lg mb-6 sm:mb-10 mt-4 sm:mt-6 drop-shadow-[0_2px_12px_rgba(0,0,0,0.6)]" dir={language === 'ar' ? 'rtl' : 'ltr'}>
+            {t('hero.description')}
+          </p>
+
+          <div className="flex flex-wrap gap-3 sm:gap-4">
+            <a href="#projects" className="btn-primary min-h-[44px]">{t('hero.btnWork')}</a>
+            <a href="#about" className="btn-secondary-dark backdrop-blur-sm min-h-[44px]">{t('hero.btnAbout')}</a>
+          </div>
         </div>
 
-        {/* Name */}
-        <h1 className="text-6xl md:text-8xl font-bold leading-tight tracking-tight mb-5
-                       animate-[fadeSlideUp_0.9s_ease_0.2s_both]">
-          <span className="text-[#FFF9E6]">Reem </span>
-          <span className="bg-gradient-to-br from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-            Ziadeh
-          </span>
-        </h1>
-
-        {/* Typewriter */}
-        <div className="font-mono text-lg md:text-2xl text-orange-500 mb-6 min-h-8
-                        animate-[fadeSlideUp_0.9s_ease_0.4s_both]">
-          {typed}
-          <span className="animate-pulse">|</span>
-        </div>
-
-        {/* Sub */}
-        <p className="text-[#A89F7A] text-base max-w-xl mx-auto leading-relaxed mb-10
-                      animate-[fadeSlideUp_0.9s_ease_0.5s_both]">
-          Electrical Power Engineering graduate from Tishreen University, Lattakia — specializing
-          in power distribution systems, protection design, and electrical installations.
-        </p>
-
-        {/* CTA */}
-        <div className="flex gap-4 justify-center flex-wrap animate-[fadeSlideUp_0.9s_ease_0.6s_both]">
-          <a href="#projects"
-            className="bg-gradient-to-br from-yellow-400 to-orange-500 text-[#0A0A08] font-bold
-                       px-9 py-3.5 rounded-lg text-sm shadow-[0_0_30px_rgba(255,215,0,0.3)]
-                       hover:-translate-y-0.5 hover:shadow-[0_0_60px_rgba(255,215,0,0.55)]
-                       transition-all">
-            View Projects
-          </a>
-          <a href="#contact"
-            className="border border-white/15 text-[#FFF9E6] px-9 py-3.5 rounded-lg text-sm
-                       hover:border-yellow-400 hover:text-yellow-400 transition-all">
-            Get in Touch
-          </a>
+        <div
+          ref={stats.ref}
+          className={`hidden lg:flex absolute right-10 top-1/2 -translate-y-1/2 flex-col gap-4 transition-all duration-1000 ease-out delay-200 ${
+            stats.visible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-16'
+          }`}
+        >
+          {[
+            { n: '1', l: t('hero.stats.exp') },
+            { n: '2', l: t('hero.stats.projects') },
+            { n: '2024', l: t('hero.stats.graduate') },
+          ].map((s, i) => (
+            <div
+              key={s.l}
+              className="card-dark px-6 py-4 text-center min-w-[120px] backdrop-blur-md bg-void-card/80 animate-floatY"
+              style={{ animationDelay: `${i * 0.6}s` }}
+            >
+              <div className="text-2xl font-bold text-copper-light">{s.n}</div>
+              <div className="text-[10px] text-milk-muted uppercase tracking-widest mt-1">{s.l}</div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Scroll hint */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center
-                      gap-2 text-[#A89F7A] text-xs tracking-widest animate-bounce">
-        <span>SCROLL</span>
-        <div className="w-px h-12 bg-gradient-to-b from-yellow-400 to-transparent" />
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2
+                      text-milk-dim text-[10px] tracking-[0.3em] uppercase animate-floatY">
+        <span>{t('hero.scroll')}</span>
+        <div className="w-px h-10 bg-gradient-to-b from-copper to-transparent" />
       </div>
     </section>
   );

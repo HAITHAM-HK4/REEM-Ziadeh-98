@@ -9,6 +9,8 @@ export interface Project {
   gradientClass: string;
   tools: string[];
   highlights: Highlight[];
+  featured?: boolean;
+  images?: string[];
 }
 
 export interface Highlight {
@@ -34,4 +36,6 @@ export interface ExperienceItem {
   title: string;
   org: string;
   desc: string;
+  skills?: string[];
+  iconType?: 'graduation' | 'briefcase' | 'certificate' | 'building';
 }

@@ -1,27 +1,48 @@
-import ParticleCanvas from './components/ParticleCanvas';
+import { lazy, Suspense } from 'react';
+import { TranslationProvider } from './contexts/TranslationContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import Skills from './components/Skills';
-import Projects from './components/Projects';
-import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 
+const Skills = lazy(() => import('./components/Skills'));
+const Projects = lazy(() => import('./components/Projects'));
+const Experience = lazy(() => import('./components/Experience'));
+
 export default function App() {
   return (
-    <div className="bg-[#0A0A08] text-[#FFF9E6] min-h-screen overflow-x-hidden">
-      <ParticleCanvas />
+    <TranslationProvider>
+      {/* TEMPORARY: Fixed global video background for testing */}
+      <div className="fixed inset-0 w-screen h-screen -z-10 overflow-hidden">
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          src="/videos/hero-substation.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        />
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
+
       <Navbar />
       <main>
         <Hero />
         <About />
-        <Skills />
-        <Projects />
-        <Experience />
+        <Suspense fallback={<div className="min-h-[50vh] bg-void" />}>
+          <Skills />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[50vh] bg-void" />}>
+          <Projects />
+        </Suspense>
+        <Suspense fallback={<div className="min-h-[50vh] bg-void" />}>
+          <Experience />
+        </Suspense>
         <Contact />
       </main>
       <Footer />
-    </div>
+    </TranslationProvider>
   );
 }
