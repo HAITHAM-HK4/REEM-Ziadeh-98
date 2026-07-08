@@ -5,6 +5,7 @@ interface Props {
   overlay?: 'dark' | 'light' | 'copper';
   className?: string;
   kenBurns?: boolean;
+  preload?: 'none' | 'metadata' | 'auto';
 }
 
 const overlays = {
@@ -27,6 +28,7 @@ const VideoBackground = memo(({
   overlay = 'dark',
   className = '',
   kenBurns = true,
+  preload = 'metadata',
 }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -74,7 +76,7 @@ const hasLoadedRef = useRef(false);
         muted
         loop
         playsInline
-        preload="metadata"
+        preload={preload}
         onCanPlay={() => setReady(true)}
         className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1.8s] ease-out
                     ${kenBurns ? 'animate-kenBurns' : ''}
