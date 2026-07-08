@@ -3,6 +3,7 @@ import { useReveal } from '../hooks/useReveal';
 import { useTranslation } from '../contexts/TranslationContext';
 import Section from './Section';
 import SkillsBackground from './SkillsBackground';
+import VideoBackground from './VideoBackground';
 
 // ─── Data ──────────────────────────────────────────────────────────────────
 const skillCategories = [
@@ -266,16 +267,8 @@ export default function Skills() {
       </div>
 
       {/* Storm Video Background */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          src="/videos/storm.webm"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        />
+      <div className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
+        <VideoBackground src="/videos/storm.webm" overlay="dark" className="absolute inset-0 w-full h-full" />
       </div>
 
       {/* Gray Overlay — untouched */}

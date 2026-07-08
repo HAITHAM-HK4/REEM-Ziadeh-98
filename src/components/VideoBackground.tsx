@@ -79,6 +79,7 @@ const hasLoadedRef = useRef(false);
         className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1.8s] ease-out
                     ${kenBurns ? 'animate-kenBurns' : ''}
                     ${ready ? 'opacity-100' : 'opacity-0'}`}
+        style={{ aspectRatio: '16/9' }}
       />
       <div
         className="absolute inset-0 transition-opacity duration-[1.8s]"
