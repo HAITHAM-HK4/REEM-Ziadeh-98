@@ -17,12 +17,12 @@ export default function App() {
       <div className="fixed inset-0 w-screen h-screen -z-10 overflow-hidden">
         <video
           className="absolute inset-0 w-full h-full object-cover"
-          src="/videos/hero-substation.webm"
+          src="https://res.cloudinary.com/e2kvlfyf/video/upload/hero-substation_p2ok4v.mp4"
           autoPlay
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
         />
         <div className="absolute inset-0 bg-black/50" />
       </div>

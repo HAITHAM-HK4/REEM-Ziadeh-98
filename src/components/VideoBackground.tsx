@@ -74,7 +74,7 @@ const hasLoadedRef = useRef(false);
         muted
         loop
         playsInline
-        preload="none"
+        preload="metadata"
         onCanPlay={() => setReady(true)}
         className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1.8s] ease-out
                     ${kenBurns ? 'animate-kenBurns' : ''}

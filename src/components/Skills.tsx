@@ -268,7 +268,7 @@ export default function Skills() {
 
       {/* Storm Video Background */}
       <div className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
-        <VideoBackground src="/videos/storm.webm" overlay="dark" className="absolute inset-0 w-full h-full" />
+        <VideoBackground src="https://res.cloudinary.com/e2kvlfyf/video/upload/storm_lsas3q.mp4" overlay="dark" className="absolute inset-0 w-full h-full" />
       </div>
 
       {/* Gray Overlay — untouched */}

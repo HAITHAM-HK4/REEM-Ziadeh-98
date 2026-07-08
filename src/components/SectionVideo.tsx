@@ -62,7 +62,7 @@ const hasLoadedRef = useRef(false);
             muted
             loop
             playsInline
-            preload="none"
+            preload="metadata"
             onCanPlay={() => setReady(true)}
             className={`w-full h-full object-cover transition-all duration-[2s] ease-out
                         group-hover:scale-105

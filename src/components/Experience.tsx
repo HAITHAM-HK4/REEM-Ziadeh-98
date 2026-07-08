@@ -48,7 +48,7 @@ const Experience = () => {
   return (
     <Section id="experience" tone="dark" className="relative py-20 sm:py-24 md:py-32 overflow-hidden bg-void">
       {/* Same background video used in the About section, for visual consistency */}
-      <VideoBackground src="/videos/about-power-lines.webm" overlay="copper" />
+      <VideoBackground src="https://res.cloudinary.com/e2kvlfyf/video/upload/about-power-lines_iipdk4.mp4" overlay="copper" />
 
       {/* Top gradient fade for seamless transition from the previous section */}
       <div className="absolute top-0 left-0 right-0 h-32 pointer-events-none z-[2]" aria-hidden="true">
