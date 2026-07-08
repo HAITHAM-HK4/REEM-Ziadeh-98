@@ -269,7 +269,7 @@ export default function Skills() {
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
         <video
           className="absolute inset-0 w-full h-full object-cover"
-          src="/videos/storm.mp4"
+          src="/videos/storm.webm"
           autoPlay
           muted
           loop

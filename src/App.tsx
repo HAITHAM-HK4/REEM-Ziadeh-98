@@ -17,7 +17,7 @@ export default function App() {
       <div className="fixed inset-0 w-screen h-screen -z-10 overflow-hidden">
         <video
           className="absolute inset-0 w-full h-full object-cover"
-          src="/videos/hero-substation.mp4"
+          src="/videos/hero-substation.webm"
           autoPlay
           muted
           loop

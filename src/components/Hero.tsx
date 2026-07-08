@@ -11,7 +11,7 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-end md:items-center overflow-hidden bg-void">
-      <VideoBackground src="/videos/hero-substation.mp4" overlay="copper" />
+      <VideoBackground src="/videos/hero-substation.webm" overlay="copper" />
 
       {/* Animated scan line */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]" aria-hidden="true">
