@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, memo } from 'react';
+import { useVideoManager } from '../contexts/VideoManagerContext';
 
 interface Props {
   src: string;
@@ -23,12 +24,6 @@ const overlays = {
   `,
 };
 
-// Global state to ensure only one video plays at a time
-let activeVideoId: string | null = null;
-const setActiveVideo = (id: string | null) => {
-  activeVideoId = id;
-};
-
 const VideoBackground = memo(({
   src,
   overlay = 'dark',
@@ -39,27 +34,19 @@ const VideoBackground = memo(({
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
-  const videoId = useRef<string>(src); // Use src as unique ID
-  const playPromiseRef = useRef<Promise<void> | null>(null);
-  const isPlayingRef = useRef(false);
-
+  const videoId = useRef<string>(src);
   const hasLoadedRef = useRef(false);
+  const { registerVideo, unregisterVideo, activateVideo, activeVideoId } = useVideoManager();
 
+  // Register video on mount
   useEffect(() => {
-    const video = videoRef.current;
-    const container = containerRef.current;
-    if (!video || !container) return;
-
-    // Clean up on unmount
+    registerVideo(videoId.current, videoRef);
     return () => {
-      if (activeVideoId === videoId.current) {
-        setActiveVideo(null);
-      }
-      playPromiseRef.current = null;
-      isPlayingRef.current = false;
+      unregisterVideo(videoId.current);
     };
-  }, [src]);
+  }, [registerVideo, unregisterVideo]);
 
+  // IntersectionObserver for visibility detection
   useEffect(() => {
     const video = videoRef.current;
     const container = containerRef.current;
@@ -68,62 +55,14 @@ const VideoBackground = memo(({
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // This video is now visible
+          // Load video metadata if not already loaded
           if (!hasLoadedRef.current) {
             video.load();
             hasLoadedRef.current = true;
           }
 
-          // If another video is active, pause it first
-          if (activeVideoId && activeVideoId !== videoId.current) {
-            // Find and pause the other video
-            document.querySelectorAll('video').forEach(v => {
-              if (v !== video && !v.paused) {
-                v.pause();
-              }
-            });
-          }
-
-          // Set this as the active video
-          setActiveVideo(videoId.current);
-
-          // Play this video with race condition protection
-          if (!isPlayingRef.current) {
-            const playPromise = video.play();
-            playPromiseRef.current = playPromise;
-            
-            if (playPromise !== undefined) {
-              playPromise
-                .then(() => {
-                  isPlayingRef.current = true;
-                  playPromiseRef.current = null;
-                })
-                .catch((err) => {
-                  // Ignore AbortError (common during fast scrolling)
-                  if (err.name !== 'AbortError') {
-                    console.warn('Video play error:', err);
-                  }
-                  isPlayingRef.current = false;
-                  playPromiseRef.current = null;
-                });
-            }
-          }
-        } else {
-          // Video is not visible, pause it
-          if (isPlayingRef.current) {
-            // Cancel any pending play promise to prevent race conditions
-            if (playPromiseRef.current) {
-              playPromiseRef.current = null;
-            }
-            
-            video.pause();
-            isPlayingRef.current = false;
-            
-            // If this was the active video, clear the active state
-            if (activeVideoId === videoId.current) {
-              setActiveVideo(null);
-            }
-          }
+          // Activate this video through the context manager
+          activateVideo(videoId.current);
         }
       },
       { threshold: 0.4, rootMargin: '100px' }
@@ -133,15 +72,8 @@ const VideoBackground = memo(({
 
     return () => {
       observer.disconnect();
-      if (isPlayingRef.current) {
-        video.pause();
-        isPlayingRef.current = false;
-      }
-      if (activeVideoId === videoId.current) {
-        setActiveVideo(null);
-      }
     };
-  }, [src]);
+  }, [activateVideo]);
 
   return (
     <div ref={containerRef} className={`absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">

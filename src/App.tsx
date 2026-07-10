@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { TranslationProvider } from './contexts/TranslationContext';
+import { VideoManagerProvider } from './contexts/VideoManagerContext';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -13,36 +14,38 @@ const Experience = lazy(() => import('./components/Experience'));
 export default function App() {
   return (
     <TranslationProvider>
-      {/* TEMPORARY: Fixed global video background for testing */}
-      <div className="fixed inset-0 w-screen h-screen -z-10 overflow-hidden">
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          src="https://res.cloudinary.com/e2kvlfyf/video/upload/q_auto,f_auto,w_1920/hero-substation_p2ok4v.mp4"
-          muted
-          loop
-          playsInline
-          preload="auto"
-          autoPlay
-        />
-        <div className="absolute inset-0 bg-black/50" />
-      </div>
+      <VideoManagerProvider>
+        {/* TEMPORARY: Fixed global video background for testing */}
+        <div className="fixed inset-0 w-screen h-screen -z-10 overflow-hidden">
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            src="https://res.cloudinary.com/e2kvlfyf/video/upload/q_auto,f_auto,w_1920/hero-substation_p2ok4v.mp4"
+            muted
+            loop
+            playsInline
+            preload="auto"
+            autoPlay
+          />
+          <div className="absolute inset-0 bg-black/50" />
+        </div>
 
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Suspense fallback={<div className="min-h-[50vh] bg-void" />}>
-          <Skills />
-        </Suspense>
-        <Suspense fallback={<div className="min-h-[50vh] bg-void" />}>
-          <Projects />
-        </Suspense>
-        <Suspense fallback={<div className="min-h-[50vh] bg-void" />}>
-          <Experience />
-        </Suspense>
-        <Contact />
-      </main>
-      <Footer />
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <Suspense fallback={<div className="min-h-[50vh] bg-void" />}>
+            <Skills />
+          </Suspense>
+          <Suspense fallback={<div className="min-h-[50vh] bg-void" />}>
+            <Projects />
+          </Suspense>
+          <Suspense fallback={<div className="min-h-[50vh] bg-void" />}>
+            <Experience />
+          </Suspense>
+          <Contact />
+        </main>
+        <Footer />
+      </VideoManagerProvider>
     </TranslationProvider>
   );
 }
