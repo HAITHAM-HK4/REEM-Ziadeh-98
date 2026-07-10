@@ -23,6 +23,12 @@ const overlays = {
   `,
 };
 
+// Global state to ensure only one video plays at a time
+let activeVideoId: string | null = null;
+const setActiveVideo = (id: string | null) => {
+  activeVideoId = id;
+};
+
 const VideoBackground = memo(({
   src,
   overlay = 'dark',
@@ -33,8 +39,26 @@ const VideoBackground = memo(({
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
+  const videoId = useRef<string>(src); // Use src as unique ID
+  const playPromiseRef = useRef<Promise<void> | null>(null);
+  const isPlayingRef = useRef(false);
 
-const hasLoadedRef = useRef(false);
+  const hasLoadedRef = useRef(false);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    const container = containerRef.current;
+    if (!video || !container) return;
+
+    // Clean up on unmount
+    return () => {
+      if (activeVideoId === videoId.current) {
+        setActiveVideo(null);
+      }
+      playPromiseRef.current = null;
+      isPlayingRef.current = false;
+    };
+  }, [src]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -44,26 +68,78 @@ const hasLoadedRef = useRef(false);
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
+          // This video is now visible
           if (!hasLoadedRef.current) {
             video.load();
             hasLoadedRef.current = true;
           }
-          const playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(() => {});
+
+          // If another video is active, pause it first
+          if (activeVideoId && activeVideoId !== videoId.current) {
+            // Find and pause the other video
+            document.querySelectorAll('video').forEach(v => {
+              if (v !== video && !v.paused) {
+                v.pause();
+              }
+            });
+          }
+
+          // Set this as the active video
+          setActiveVideo(videoId.current);
+
+          // Play this video with race condition protection
+          if (!isPlayingRef.current) {
+            const playPromise = video.play();
+            playPromiseRef.current = playPromise;
+            
+            if (playPromise !== undefined) {
+              playPromise
+                .then(() => {
+                  isPlayingRef.current = true;
+                  playPromiseRef.current = null;
+                })
+                .catch((err) => {
+                  // Ignore AbortError (common during fast scrolling)
+                  if (err.name !== 'AbortError') {
+                    console.warn('Video play error:', err);
+                  }
+                  isPlayingRef.current = false;
+                  playPromiseRef.current = null;
+                });
+            }
           }
         } else {
-          video.pause();
+          // Video is not visible, pause it
+          if (isPlayingRef.current) {
+            // Cancel any pending play promise to prevent race conditions
+            if (playPromiseRef.current) {
+              playPromiseRef.current = null;
+            }
+            
+            video.pause();
+            isPlayingRef.current = false;
+            
+            // If this was the active video, clear the active state
+            if (activeVideoId === videoId.current) {
+              setActiveVideo(null);
+            }
+          }
         }
       },
-      { threshold: 0.1, rootMargin: '150px' }
+      { threshold: 0.4, rootMargin: '100px' }
     );
 
     observer.observe(container);
 
     return () => {
       observer.disconnect();
-      video.pause();
+      if (isPlayingRef.current) {
+        video.pause();
+        isPlayingRef.current = false;
+      }
+      if (activeVideoId === videoId.current) {
+        setActiveVideo(null);
+      }
     };
   }, [src]);
 
@@ -72,7 +148,6 @@ const hasLoadedRef = useRef(false);
       <video
         ref={videoRef}
         src={src}
-        autoPlay
         muted
         loop
         playsInline

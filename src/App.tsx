@@ -18,11 +18,11 @@ export default function App() {
         <video
           className="absolute inset-0 w-full h-full object-cover"
           src="https://res.cloudinary.com/e2kvlfyf/video/upload/q_auto,f_auto,w_1920/hero-substation_p2ok4v.mp4"
-          autoPlay
           muted
           loop
           playsInline
           preload="auto"
+          autoPlay
         />
         <div className="absolute inset-0 bg-black/50" />
       </div>
