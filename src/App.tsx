@@ -13,16 +13,12 @@ const Experience = lazy(() => import('./components/Experience'));
 export default function App() {
   return (
     <TranslationProvider>
-      {/* TEMPORARY: Fixed global video background for testing */}
+      {/* Fixed global background image */}
       <div className="fixed inset-0 w-screen h-screen -z-10 overflow-hidden">
-        <video
+        <img
+          src="https://res.cloudinary.com/e2kvlfyf/video/upload/so_7/hero-substation_p2ok4v.jpg"
+          alt=""
           className="absolute inset-0 w-full h-full object-cover"
-          src="https://res.cloudinary.com/e2kvlfyf/video/upload/w_1280,q_auto,f_auto/hero-substation_p2ok4v.mp4"
-          muted
-          loop
-          playsInline
-          preload="auto"
-          autoPlay
         />
         <div className="absolute inset-0 bg-black/50" />
       </div>

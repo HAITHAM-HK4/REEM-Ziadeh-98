@@ -1,7 +1,6 @@
 import { useTypewriter } from '../hooks/useTypewriter';
 import { useReveal } from '../hooks/useReveal';
 import { useTranslation } from '../contexts/TranslationContext';
-import VideoBackground from './VideoBackground';
 
 export default function Hero() {
   const { t, language } = useTranslation();
@@ -11,7 +10,22 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-end md:items-center overflow-hidden bg-void">
-      <VideoBackground src="https://res.cloudinary.com/e2kvlfyf/video/upload/w_1280,q_auto,f_auto/hero-substation_p2ok4v.mp4" overlay="copper" preload="auto" />
+      <div className="absolute inset-0 overflow-hidden">
+        <img
+          src="https://res.cloudinary.com/e2kvlfyf/video/upload/so_7/hero-substation_p2ok4v.jpg"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 60% 50% at 30% 40%, rgba(212,98,42,0.18) 0%, transparent 60%),
+              linear-gradient(105deg, rgba(15,15,16,0.88) 0%, rgba(15,15,16,0.55) 50%, rgba(15,15,16,0.25) 100%)
+            `,
+          }}
+        />
+      </div>
 
       {/* Animated scan line */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]" aria-hidden="true">

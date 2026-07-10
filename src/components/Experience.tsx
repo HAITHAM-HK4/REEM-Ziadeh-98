@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { GraduationCap, Briefcase, Award, Building2 } from 'lucide-react';
 import { experiences } from '../data/portfolio';
 import Section from './Section';
-import VideoBackground from './VideoBackground';
 import { useTranslation } from '../contexts/TranslationContext';
 import { memo } from 'react';
 
@@ -47,8 +46,22 @@ const Experience = () => {
 
   return (
     <Section id="experience" tone="dark" className="relative py-20 sm:py-24 md:py-32 overflow-hidden bg-void">
-      {/* Same background video used in the About section, for visual consistency */}
-      <VideoBackground src="https://res.cloudinary.com/e2kvlfyf/video/upload/w_1280,q_auto,f_auto/about-power-lines_iipdk4.mp4" overlay="copper" />
+      <div className="absolute inset-0 overflow-hidden">
+        <img
+          src="https://res.cloudinary.com/e2kvlfyf/video/upload/so_7/about-power-lines_iipdk4.jpg"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 60% 50% at 30% 40%, rgba(212,98,42,0.18) 0%, transparent 60%),
+              linear-gradient(105deg, rgba(15,15,16,0.88) 0%, rgba(15,15,16,0.55) 50%, rgba(15,15,16,0.25) 100%)
+            `,
+          }}
+        />
+      </div>
 
       {/* Top gradient fade for seamless transition from the previous section */}
       <div className="absolute top-0 left-0 right-0 h-32 pointer-events-none z-[2]" aria-hidden="true">

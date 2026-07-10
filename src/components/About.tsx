@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from '../contexts/TranslationContext';
-import VideoBackground from './VideoBackground';
 import ProfileFrame from './ProfileFrame';
 
 // ─── Scroll-triggered reveal hook (fires once per element, direction-aware) ─
@@ -48,7 +47,22 @@ export default function About() {
       id="about"
       className="relative min-h-screen flex items-center overflow-hidden bg-void"
     >
-      <VideoBackground src="https://res.cloudinary.com/e2kvlfyf/video/upload/w_1280,q_auto,f_auto/about-power-lines_iipdk4.mp4" overlay="copper" />
+      <div className="absolute inset-0 overflow-hidden">
+        <img
+          src="https://res.cloudinary.com/e2kvlfyf/video/upload/so_7/about-power-lines_iipdk4.jpg"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              radial-gradient(ellipse 60% 50% at 30% 40%, rgba(212,98,42,0.18) 0%, transparent 60%),
+              linear-gradient(105deg, rgba(15,15,16,0.88) 0%, rgba(15,15,16,0.55) 50%, rgba(15,15,16,0.25) 100%)
+            `,
+          }}
+        />
+      </div>
 
       <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]" aria-hidden="true">
         <div className="absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-copper/5 to-transparent animate-shimmer opacity-60" />

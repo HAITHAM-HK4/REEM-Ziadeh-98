@@ -3,7 +3,6 @@ import { useReveal } from '../hooks/useReveal';
 import { useTranslation } from '../contexts/TranslationContext';
 import Section from './Section';
 import SkillsBackground from './SkillsBackground';
-import VideoBackground from './VideoBackground';
 
 // ─── Data ──────────────────────────────────────────────────────────────────
 const skillCategories = [
@@ -266,9 +265,22 @@ export default function Skills() {
         <div className="w-full h-full bg-gradient-to-b from-void via-void/70 to-transparent" />
       </div>
 
-      {/* Storm Video Background */}
+      {/* Storm Background Image */}
       <div className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 0 }}>
-        <VideoBackground src="https://res.cloudinary.com/e2kvlfyf/video/upload/w_1280,q_auto,f_auto/storm_lsas3q.mp4" overlay="dark" className="absolute inset-0 w-full h-full" />
+        <img
+          src="https://res.cloudinary.com/e2kvlfyf/video/upload/so_7/storm_lsas3q.jpg"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              linear-gradient(105deg, rgba(15,15,16,0.92) 0%, rgba(15,15,16,0.75) 45%, rgba(15,15,16,0.35) 100%),
+              linear-gradient(to top, rgba(15,15,16,0.6) 0%, transparent 40%)
+            `,
+          }}
+        />
       </div>
 
       {/* Gray Overlay — untouched */}
